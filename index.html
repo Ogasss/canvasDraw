@@ -46,34 +46,53 @@
 
         let flag = false
 
-        canvas.onmousedown = () =>{
-            flag = true
-        }
+        var isTouchDevice = 'ontouchstart' in document.documentElement
+        console.log(isTouchDevice)
+        //检测当前窗口是否支持触屏，支持返回true
 
-        ctx.fillStyle = "black"
-        //通过canvas画的图形为黑色
-        // ctx.fillRect(20,20,66,60)
-        //正方形参数：left、top、宽高
-        canvas.onmousemove = (e) =>{
-            if(flag === true){
-                // 鼠标移动触发事件
-                console.log(e.clientX)
-                console.log(e.clientY)
-                // 获取鼠标触发事件的位置坐标
-                // ctx.fillRect(e.clientX - 2,e.clientY -2, 4, 4)
-                //在位置坐标的中点放置宽高为4的矩形
+        if(isTouchDevice){
+            canvas.ontouchmove = (e) => {
+                let x = e.touches[0].clientX
+                let y = e.touches[0].clientY
+                
+                flag = true
+
+                ctx.fillStyle = 'black'
                 ctx.beginPath()
-                ctx.arc(e.clientX,e.clientY,4,0,2 * Math.PI)
+                ctx.arc(x,y,4,0,2 * Math.PI)
                 ctx.stroke()
                 ctx.fill()
-                //在位置坐标的中点绘制半径为4的圆形
             }
-        }
 
-        canvas.onmouseup = () =>{
-            flag = false
-        }
-        
+        }else{
+            canvas.onmousedown = () =>{
+                flag = true
+            }
+
+            ctx.fillStyle = "black"
+            //通过canvas画的图形为黑色
+            // ctx.fillRect(20,20,66,60)
+            //正方形参数：left、top、宽高
+            canvas.onmousemove = (e) =>{
+                if(flag === true){
+                    // 鼠标移动触发事件
+                    console.log(e.clientX)
+                    console.log(e.clientY)
+                    // 获取鼠标触发事件的位置坐标
+                    // ctx.fillRect(e.clientX - 2,e.clientY -2, 4, 4)
+                    //在位置坐标的中点放置宽高为4的矩形
+                    ctx.beginPath()
+                    ctx.arc(e.clientX,e.clientY,4,0,2 * Math.PI)
+                    ctx.stroke()
+                    ctx.fill()
+                    //在位置坐标的中点绘制半径为4的圆形
+                }
+            }
+
+            canvas.onmouseup = () =>{
+                flag = false
+            }
+        }        
     </script>
 </body>
 </html>
