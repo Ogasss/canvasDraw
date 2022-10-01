@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <title>canvas</title>
 </head>
 <body>
-    
+    <div id="canvas">
+
+    </div>
+    <script>
+        canvas.onclick = (e)=>{
+            // console.log(e)
+            // 在div内点击后触发该函数，形参e是该次点击的事件，类型为object
+            //e.clientX ＆ e.clientY是点击事件的两个属性，用于记录点击的位置坐标
+            console.log(e.clientX)
+            console.log(e.clientY)
+            let div = document.createElement('div')
+            //通过documentAPI的createElement函数，创建一个div标签元素，变量名为div
+            div.style.position = 'absolute'
+            div.style.left = e.clientX + 'px'
+            div.style.top = e.clientY + 'px'
+            div.style.border = '1px solid black'
+            div.style.width = '6px'
+            div.style.height = '6px'
+            div.style.marginLeft = '-3px'
+            div.style.marginTop = '-3px'
+            div.style.borderRadius = '50%'
+            div.style.backgroundColor = 'black'
+            //样式为，采用absolute定位，通过top，left控制位置
+            canvas.appendChild(div)
+            //在完善样式后，将div标签元素放入canvas元素中，不放入只会存放在内存
+        }
+    </script>
 </body>
 </html>
