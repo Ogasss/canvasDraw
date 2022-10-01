@@ -34,42 +34,59 @@
         //     canvas.appendChild(div)
         //     //在完善样式后，将div标签元素放入canvas元素中，不放入只会存放在内存
         // }
+        function drawLine(x1,y1,x2,y2){
+            ctx.beginPath()
+            ctx.moveTo(x1,y1)
+            ctx.lineTo(x2,y2)
+            ctx.stroke()
+            ctx.fill()
+        }
+        //给出起点和终点，连接成线
 
-
-        var canvas = document.getElementById("canvas")
+        let canvas = document.getElementById("canvas")
         // 获取canvas元素
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
+        canvas.width = document.documentElement.clientWidth
+        canvas.height = document.documentElement.clientHeight
         //设置宽高
         var ctx = canvas.getContext('2d');
         //不知道
-
+        ctx.fillStyle = 'black'
+        ctx.strokeStyle = 'black'
+        ctx.lineWidth = 12
+        ctx.lineCap = 'round'
         let flag = false
 
         var isTouchDevice = 'ontouchstart' in document.documentElement
         console.log(isTouchDevice)
         //检测当前窗口是否支持触屏，支持返回true
 
+        // drawLine(0,0,300,300)
+        // drawLine(300,300,500,800)
+
         if(isTouchDevice){
+            canvas.ontouchstart = (e) =>{
+                let x = e.touches[0].clientX
+                let y = e.touches[0].clientY
+                last = [x,y]
+            }
             canvas.ontouchmove = (e) => {
                 let x = e.touches[0].clientX
                 let y = e.touches[0].clientY
                 
                 flag = true
 
-                ctx.fillStyle = 'black'
-                ctx.beginPath()
-                ctx.arc(x,y,4,0,2 * Math.PI)
-                ctx.stroke()
-                ctx.fill()
+                drawLine(last[0],last[1],x,y)
+                last = [x,y]
             }
 
         }else{
-            canvas.onmousedown = () =>{
+            canvas.onmousedown = (e) =>{
                 flag = true
+                last = [e.clientX,e.clientY]
+                //获取终点位置
             }
 
-            ctx.fillStyle = "black"
+            
             //通过canvas画的图形为黑色
             // ctx.fillRect(20,20,66,60)
             //正方形参数：left、top、宽高
@@ -78,14 +95,10 @@
                     // 鼠标移动触发事件
                     console.log(e.clientX)
                     console.log(e.clientY)
-                    // 获取鼠标触发事件的位置坐标
-                    // ctx.fillRect(e.clientX - 2,e.clientY -2, 4, 4)
-                    //在位置坐标的中点放置宽高为4的矩形
-                    ctx.beginPath()
-                    ctx.arc(e.clientX,e.clientY,4,0,2 * Math.PI)
-                    ctx.stroke()
-                    ctx.fill()
-                    //在位置坐标的中点绘制半径为4的圆形
+                    
+                    drawLine(last[0],last[1],e.clientX,e.clientY)
+                    last = [e.clientX,e.clientY]
+                    // 画线结束更新终点位置为下一次的起点位置
                 }
             }
 
