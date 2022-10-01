@@ -13,4 +13,5 @@
         canvas与图片一样会出现莫名其妙的额外宽高
         因为其默认的display为inline-block
     */
+    background-color: white;
 }
