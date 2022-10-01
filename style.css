@@ -5,7 +5,12 @@
 }
 
 #canvas{
-    height: 100vh;
-    width: 100vw;
-    border: 1px solid red;
+    /* height: 100vh;
+    width: 100vw; */
+    /* border: 1px solid red; */
+    display: block;
+    /* 
+        canvas与图片一样会出现莫名其妙的额外宽高
+        因为其默认的display为inline-block
+    */
 }

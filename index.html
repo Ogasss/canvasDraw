@@ -8,32 +8,72 @@
     <title>canvas</title>
 </head>
 <body>
-    <div id="canvas">
+    <canvas id="canvas" width="100" height="100">
 
-    </div>
+    </canvas>
     <script>
-        canvas.onclick = (e)=>{
-            // console.log(e)
-            // 在div内点击后触发该函数，形参e是该次点击的事件，类型为object
-            //e.clientX ＆ e.clientY是点击事件的两个属性，用于记录点击的位置坐标
-            console.log(e.clientX)
-            console.log(e.clientY)
-            let div = document.createElement('div')
-            //通过documentAPI的createElement函数，创建一个div标签元素，变量名为div
-            div.style.position = 'absolute'
-            div.style.left = e.clientX + 'px'
-            div.style.top = e.clientY + 'px'
-            div.style.border = '1px solid black'
-            div.style.width = '6px'
-            div.style.height = '6px'
-            div.style.marginLeft = '-3px'
-            div.style.marginTop = '-3px'
-            div.style.borderRadius = '50%'
-            div.style.backgroundColor = 'black'
-            //样式为，采用absolute定位，通过top，left控制位置
-            canvas.appendChild(div)
-            //在完善样式后，将div标签元素放入canvas元素中，不放入只会存放在内存
+        // canvas.onclick = (e)=>{
+        //     // console.log(e)
+        //     // 在div内点击后触发该函数，形参e是该次点击的事件，类型为object
+        //     //e.clientX ＆ e.clientY是点击事件的两个属性，用于记录点击的位置坐标
+        //     console.log(e.clientX)
+        //     console.log(e.clientY)
+        //     let div = document.createElement('div')
+        //     //通过documentAPI的createElement函数，创建一个div标签元素，变量名为div
+        //     div.style.position = 'absolute'
+        //     div.style.left = e.clientX + 'px'
+        //     div.style.top = e.clientY + 'px'
+        //     div.style.border = '1px solid black'
+        //     div.style.width = '6px'
+        //     div.style.height = '6px'
+        //     div.style.marginLeft = '-3px'
+        //     div.style.marginTop = '-3px'
+        //     div.style.borderRadius = '50%'
+        //     div.style.backgroundColor = 'black'
+        //     //样式为，采用absolute定位，通过top，left控制位置
+        //     canvas.appendChild(div)
+        //     //在完善样式后，将div标签元素放入canvas元素中，不放入只会存放在内存
+        // }
+
+
+        var canvas = document.getElementById("canvas")
+        // 获取canvas元素
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        //设置宽高
+        var ctx = canvas.getContext('2d');
+        //不知道
+
+        let flag = false
+
+        canvas.onmousedown = () =>{
+            flag = true
         }
+
+        ctx.fillStyle = "black"
+        //通过canvas画的图形为黑色
+        // ctx.fillRect(20,20,66,60)
+        //正方形参数：left、top、宽高
+        canvas.onmousemove = (e) =>{
+            if(flag === true){
+                // 鼠标移动触发事件
+                console.log(e.clientX)
+                console.log(e.clientY)
+                // 获取鼠标触发事件的位置坐标
+                // ctx.fillRect(e.clientX - 2,e.clientY -2, 4, 4)
+                //在位置坐标的中点放置宽高为4的矩形
+                ctx.beginPath()
+                ctx.arc(e.clientX,e.clientY,4,0,2 * Math.PI)
+                ctx.stroke()
+                ctx.fill()
+                //在位置坐标的中点绘制半径为4的圆形
+            }
+        }
+
+        canvas.onmouseup = () =>{
+            flag = false
+        }
+        
     </script>
 </body>
 </html>
